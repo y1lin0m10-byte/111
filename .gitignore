@@ -1,0 +1,22 @@
+# ROS 2 and colcon build products
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Simulation captures and local outputs
+outputs/
+*.bag
+*.db3
+
