@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, TimerAction
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, TimerAction
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
+from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
@@ -14,9 +15,7 @@ def generate_launch_description() -> LaunchDescription:
     xacro_path = PathJoinSubstitution(
         [package_share, "urdf", "kr6_d405_workcell.urdf.xacro"]
     )
-    controller_config = PathJoinSubstitution(
-        [package_share, "config", "controllers.yaml"]
-    )
+    start_assembly_demo = LaunchConfiguration("start_assembly_demo")
 
     robot_description = Command(
         [FindExecutable(name="xacro"), " ", xacro_path]
@@ -79,7 +78,7 @@ def generate_launch_description() -> LaunchDescription:
         output="screen",
     )
 
-    assembly_demo = Node(
+    assembly_demo_node = Node(
         package="designgrounded_ros2",
         executable="assembly_demo",
         parameters=[
@@ -91,10 +90,16 @@ def generate_launch_description() -> LaunchDescription:
             }
         ],
         output="screen",
+        condition=IfCondition(start_assembly_demo),
     )
 
     return LaunchDescription(
         [
+            DeclareLaunchArgument(
+                "start_assembly_demo",
+                default_value="true",
+                description="Start the sequential component-spawning demo",
+            ),
             gazebo,
             robot_state_publisher,
             spawn_robot,
@@ -108,7 +113,7 @@ def generate_launch_description() -> LaunchDescription:
             ),
             TimerAction(
                 period=9.0,
-                actions=[assembly_demo],
+                actions=[assembly_demo_node],
             ),
         ]
     )

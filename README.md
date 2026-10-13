@@ -9,6 +9,13 @@ small modular wood structure with 52 components
 sequential pick-and-place style assembly demonstration
 ```
 
+There are two launch modes:
+
+```text
+sim_gazebo.launch.py   sequential component-spawning demonstration
+pick_place.launch.py   D405 perception and closed-loop wood-block placement
+```
+
 The URDF is a kinematic approximation for ROS 2 and Gazebo. It is not a
 safety-certified KUKA controller model.
 
@@ -33,7 +40,11 @@ sudo apt install -y \
   ros-humble-xacro \
   ros-humble-robot-state-publisher \
   ros-humble-joint-state-publisher \
-  ros-humble-controller-manager
+  ros-humble-controller-manager \
+  ros-humble-cv-bridge \
+  ros-humble-message-filters \
+  ros-humble-tf2-geometry-msgs \
+  python3-opencv
 ```
 
 ## Build
@@ -65,6 +76,31 @@ Useful topics:
 /d405/depth/points
 /assembly_progress
 /joint_states
+```
+
+For camera-based block transfer:
+
+```bash
+ros2 launch designgrounded_ros2 pick_place.launch.py
+```
+
+Data flow:
+
+```text
+/d405/color/image_raw + /d405/depth/image_raw
+→ wood_block_perception
+→ /detected_wood_blocks
+→ wood_pick_place
+→ joint trajectory controller
+→ Gazebo SetEntityState
+```
+
+Additional topics:
+
+```text
+/detected_wood_blocks
+/detected_wood_blocks_info
+/pick_place_progress
 ```
 
 The assembly node moves the six joints through a demonstration sequence and

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>designgrounded_ros2</name>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <description>ROS 2 and Gazebo simulation for KUKA KR 6, D405 and modular wood assembly.</description>
   <maintainer email="research@example.com">Design-Grounded Research</maintainer>
   <license>MIT</license>
@@ -11,6 +11,7 @@
   <exec_depend>rclpy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>trajectory_msgs</exec_depend>
   <exec_depend>control_msgs</exec_depend>
   <exec_depend>gazebo_msgs</exec_depend>
@@ -23,6 +24,10 @@
   <exec_depend>joint_trajectory_controller</exec_depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>message_filters</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
 
   <test_depend>ament_python</test_depend>
 

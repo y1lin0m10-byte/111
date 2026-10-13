@@ -17,6 +17,8 @@ sys.path.insert(0, str(PACKAGE))
 from designgrounded_ros2.component_catalog import (  # noqa: E402
     ROBOT_BASE_XYZ,
     build_components,
+    build_place_targets,
+    build_source_blocks,
 )
 
 
@@ -40,8 +42,11 @@ def main() -> int:
     python_files = [
         PACKAGE / "setup.py",
         PACKAGE / "launch" / "sim_gazebo.launch.py",
+        PACKAGE / "launch" / "pick_place.launch.py",
         PACKAGE / "designgrounded_ros2" / "assembly_node.py",
         PACKAGE / "designgrounded_ros2" / "component_catalog.py",
+        PACKAGE / "designgrounded_ros2" / "perception_node.py",
+        PACKAGE / "designgrounded_ros2" / "pick_place_node.py",
     ]
     for path in python_files:
         try:
@@ -83,6 +88,11 @@ def main() -> int:
     if max_mass > 5.0:
         errors.append(f"component mass {max_mass:.3f} kg exceeds 5.0 kg")
 
+    source_blocks = build_source_blocks(8)
+    placement_targets = build_place_targets(8)
+    if len(source_blocks) != 8 or len(placement_targets) != 8:
+        errors.append("source blocks or placement targets must contain 8 entries")
+
     urdf_text = (PACKAGE / "urdf" / "kr6_d405_workcell.urdf.xacro").read_text(
         encoding="utf-8"
     )
@@ -90,6 +100,16 @@ def main() -> int:
         errors.append("D405 not found in URDF")
     if "d405_depth_camera" not in urdf_text:
         errors.append("D405 Gazebo camera sensor missing")
+
+    package_text = (PACKAGE / "package.xml").read_text(encoding="utf-8")
+    for dependency in [
+        "cv_bridge",
+        "message_filters",
+        "tf2_ros",
+        "tf2_geometry_msgs",
+    ]:
+        if dependency not in package_text:
+            errors.append(f"package.xml missing dependency: {dependency}")
 
     if errors:
         print("ROS2_WORKSPACE=FAIL")
@@ -102,6 +122,7 @@ def main() -> int:
     print(f"max_estimated_mass_kg={max_mass:.3f}")
     print("robot=KUKA_KR6_R900_2")
     print("camera=Intel_RealSense_D405")
+    print("pick_place_nodes=perception+pick_place")
     return 0
 
 

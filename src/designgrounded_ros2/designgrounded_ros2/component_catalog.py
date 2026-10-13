@@ -189,3 +189,64 @@ def component_sdf(component: dict[str, Any]) -> str:
 </sdf>
 """.strip()
 
+
+def build_source_blocks(count: int = 8) -> list[dict[str, Any]]:
+    blocks: list[dict[str, Any]] = []
+    for index in range(count):
+        row = index // 4
+        column = index % 4
+        blocks.append(
+            {
+                "id": f"source_block_{index + 1:02d}",
+                "label": f"wood block {index + 1}",
+                "size": [0.10, 0.08, 0.04],
+                "position": [
+                    0.08 + 0.14 * column,
+                    0.24 - 0.12 * row,
+                    0.145,
+                ],
+                "rotation": [0.0, 0.0, 0.0],
+            }
+        )
+    return blocks
+
+
+def source_block_sdf(block: dict[str, Any]) -> str:
+    sx, sy, sz = block["size"]
+    mass = max(sx * sy * sz * 550.0, 0.02)
+    return f"""
+<sdf version="1.6">
+  <model name="{block['id']}">
+    <static>false</static>
+    <link name="link">
+      <inertial>
+        <mass>{mass:.6f}</mass>
+        <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+      </inertial>
+      <visual name="visual">
+        <geometry><box><size>{sx} {sy} {sz}</size></box></geometry>
+        <material><ambient>0.62 0.32 0.12 1</ambient><diffuse>0.80 0.55 0.25 1</diffuse></material>
+      </visual>
+      <collision name="collision">
+        <geometry><box><size>{sx} {sy} {sz}</size></box></geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>
+""".strip()
+
+
+def build_place_targets(count: int = 8) -> list[list[float]]:
+    targets: list[list[float]] = []
+    for index in range(count):
+        row = index // 4
+        column = index % 4
+        targets.append(
+            [
+                -0.27 + 0.18 * column,
+                0.0,
+                0.145,
+            ]
+        )
+    return targets
+
