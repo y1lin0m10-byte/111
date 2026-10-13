@@ -3,7 +3,7 @@
 This workspace simulates:
 
 ```text
-KUKA KR 6 R900-2
+KUKA KR 6 R900-2 official ROS-Industrial geometry and meshes
 Intel RealSense D405 wrist camera
 small modular wood structure with 52 components
 sequential pick-and-place style assembly demonstration
@@ -16,8 +16,10 @@ sim_gazebo.launch.py   sequential component-spawning demonstration
 pick_place.launch.py   D405 perception and closed-loop wood-block placement
 ```
 
-The URDF is a kinematic approximation for ROS 2 and Gazebo. It is not a
-safety-certified KUKA controller model.
+The KUKA geometry, joint axes and joint limits come from
+`ros-industrial/kuka_experimental`. The Gazebo D405 attachment and control
+configuration are added by this project. This is not a safety-certified KUKA
+controller model.
 
 ## Target Environment
 

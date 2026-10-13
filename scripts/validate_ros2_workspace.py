@@ -12,6 +12,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "src" / "designgrounded_ros2"
+KUKA_ROOT = ROOT / "src"
 sys.path.insert(0, str(PACKAGE))
 
 from designgrounded_ros2.component_catalog import (  # noqa: E402
@@ -32,6 +33,10 @@ def main() -> int:
         PACKAGE / "package.xml",
         PACKAGE / "urdf" / "kr6_d405_workcell.urdf.xacro",
         PACKAGE / "worlds" / "workcell.world",
+        KUKA_ROOT / "kuka_resources" / "package.xml",
+        KUKA_ROOT / "kuka_kr6_support" / "package.xml",
+        KUKA_ROOT / "kuka_kr10_support" / "package.xml",
+        KUKA_ROOT / "kuka_kr6_support" / "urdf" / "kr6r900_2_macro.xacro",
     ]
     for path in xml_files:
         try:
@@ -100,6 +105,22 @@ def main() -> int:
         errors.append("D405 not found in URDF")
     if "d405_depth_camera" not in urdf_text:
         errors.append("D405 Gazebo camera sensor missing")
+    if "kuka_kr6_support" not in urdf_text or "kuka_kr6r900_2" not in urdf_text:
+        errors.append("top-level URDF does not include the official KUKA KR6 macro")
+    for joint_name in ["joint_a1", "joint_a2", "joint_a3", "joint_a4", "joint_a5", "joint_a6"]:
+        if joint_name not in urdf_text:
+            errors.append(f"official KUKA joint missing from control config: {joint_name}")
+
+    required_mesh = (
+        KUKA_ROOT
+        / "kuka_kr10_support"
+        / "meshes"
+        / "kr10r900_2"
+        / "visual"
+        / "link_1.stl"
+    )
+    if not required_mesh.exists():
+        errors.append(f"official KR10 R900-2 mesh missing: {required_mesh}")
 
     package_text = (PACKAGE / "package.xml").read_text(encoding="utf-8")
     for dependency in [
@@ -120,7 +141,7 @@ def main() -> int:
     print("components=52")
     print(f"max_reach_m={max_reach:.3f}")
     print(f"max_estimated_mass_kg={max_mass:.3f}")
-    print("robot=KUKA_KR6_R900_2")
+    print("robot=KUKA_KR6_R900_2_official_ros_industrial")
     print("camera=Intel_RealSense_D405")
     print("pick_place_nodes=perception+pick_place")
     return 0
