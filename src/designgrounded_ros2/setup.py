@@ -6,7 +6,7 @@ package_name = "designgrounded_ros2"
 
 setup(
     name=package_name,
-    version="0.3.0",
+    version="0.4.0",
     packages=find_packages(exclude=["test"]),
     data_files=[
         ("share/ament_index/resource_index/packages", [f"resource/{package_name}"]),
@@ -16,6 +16,7 @@ setup(
             [
                 "launch/sim_gazebo.launch.py",
                 "launch/pick_place.launch.py",
+                "launch/vision_experiment.launch.py",
             ],
         ),
         (f"share/{package_name}/urdf", ["urdf/kr6_d405_workcell.urdf.xacro"]),
@@ -33,6 +34,8 @@ setup(
             "assembly_demo = designgrounded_ros2.assembly_node:main",
             "wood_block_perception = designgrounded_ros2.perception_node:main",
             "wood_pick_place = designgrounded_ros2.pick_place_node:main",
+            "vision_scene_manager = designgrounded_ros2.scene_manager_node:main",
+            "vision_benchmark = designgrounded_ros2.vision_benchmark_node:main",
         ],
     },
 )

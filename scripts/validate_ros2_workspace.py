@@ -48,10 +48,13 @@ def main() -> int:
         PACKAGE / "setup.py",
         PACKAGE / "launch" / "sim_gazebo.launch.py",
         PACKAGE / "launch" / "pick_place.launch.py",
+        PACKAGE / "launch" / "vision_experiment.launch.py",
         PACKAGE / "designgrounded_ros2" / "assembly_node.py",
         PACKAGE / "designgrounded_ros2" / "component_catalog.py",
         PACKAGE / "designgrounded_ros2" / "perception_node.py",
         PACKAGE / "designgrounded_ros2" / "pick_place_node.py",
+        PACKAGE / "designgrounded_ros2" / "scene_manager_node.py",
+        PACKAGE / "designgrounded_ros2" / "vision_benchmark_node.py",
     ]
     for path in python_files:
         try:
@@ -144,6 +147,7 @@ def main() -> int:
     print("robot=KUKA_KR6_R900_2_official_ros_industrial")
     print("camera=Intel_RealSense_D405")
     print("pick_place_nodes=perception+pick_place")
+    print("vision_experiment=scene_manager+perception+benchmark")
     return 0
 
 

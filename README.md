@@ -105,6 +105,17 @@ Additional topics:
 /pick_place_progress
 ```
 
+For repeatable perception experiments:
+
+```bash
+ros2 launch designgrounded_ros2 vision_experiment.launch.py \
+  scenario:=clear \
+  output_csv:=/tmp/vision_clear.csv
+```
+
+The experiment scenarios and metrics are documented in
+`VISION_EXPERIMENTS.md`.
+
 The assembly node moves the six joints through a demonstration sequence and
 spawns components one at a time. Component catalog and poses are generated in
 `designgrounded_ros2/component_catalog.py`.
