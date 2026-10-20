@@ -116,6 +116,16 @@ ros2 launch designgrounded_ros2 vision_experiment.launch.py \
 The experiment scenarios and metrics are documented in
 `VISION_EXPERIMENTS.md`.
 
+For stationary real D405 capture without Gazebo:
+
+```bash
+ros2 launch designgrounded_ros2 real_d405_capture.launch.py \
+  session_id:=real_session_001 \
+  output_dir:=$HOME/data/real_session_001
+```
+
+See `REAL_EXPERIMENT.md` for calibration, capture and safety requirements.
+
 The assembly node moves the six joints through a demonstration sequence and
 spawns components one at a time. Component catalog and poses are generated in
 `designgrounded_ros2/component_catalog.py`.

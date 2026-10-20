@@ -49,12 +49,14 @@ def main() -> int:
         PACKAGE / "launch" / "sim_gazebo.launch.py",
         PACKAGE / "launch" / "pick_place.launch.py",
         PACKAGE / "launch" / "vision_experiment.launch.py",
+        PACKAGE / "launch" / "real_d405_capture.launch.py",
         PACKAGE / "designgrounded_ros2" / "assembly_node.py",
         PACKAGE / "designgrounded_ros2" / "component_catalog.py",
         PACKAGE / "designgrounded_ros2" / "perception_node.py",
         PACKAGE / "designgrounded_ros2" / "pick_place_node.py",
         PACKAGE / "designgrounded_ros2" / "scene_manager_node.py",
         PACKAGE / "designgrounded_ros2" / "vision_benchmark_node.py",
+        PACKAGE / "designgrounded_ros2" / "dataset_capture_node.py",
     ]
     for path in python_files:
         try:
@@ -131,6 +133,7 @@ def main() -> int:
         "message_filters",
         "tf2_ros",
         "tf2_geometry_msgs",
+        "realsense2_camera",
     ]:
         if dependency not in package_text:
             errors.append(f"package.xml missing dependency: {dependency}")
@@ -148,6 +151,7 @@ def main() -> int:
     print("camera=Intel_RealSense_D405")
     print("pick_place_nodes=perception+pick_place")
     print("vision_experiment=scene_manager+perception+benchmark")
+    print("real_d405_capture=realsense+capture+perception")
     return 0
 
 

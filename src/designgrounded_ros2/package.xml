@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>designgrounded_ros2</name>
-  <version>0.4.0</version>
+  <version>0.5.0</version>
   <description>ROS 2 and Gazebo simulation for KUKA KR 6, D405 and modular wood assembly.</description>
   <maintainer email="research@example.com">Design-Grounded Research</maintainer>
   <license>MIT</license>
@@ -31,6 +31,7 @@
   <exec_depend>kuka_kr6_support</exec_depend>
   <exec_depend>kuka_kr10_support</exec_depend>
   <exec_depend>kuka_resources</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
 
   <test_depend>ament_python</test_depend>
 
