@@ -6,7 +6,7 @@ package_name = "designgrounded_ros2"
 
 setup(
     name=package_name,
-    version="0.5.0",
+    version="0.6.0",
     packages=find_packages(exclude=["test"]),
     data_files=[
         ("share/ament_index/resource_index/packages", [f"resource/{package_name}"]),
@@ -38,6 +38,7 @@ setup(
             "vision_scene_manager = designgrounded_ros2.scene_manager_node:main",
             "vision_benchmark = designgrounded_ros2.vision_benchmark_node:main",
             "real_d405_dataset_capture = designgrounded_ros2.dataset_capture_node:main",
+            "vision_marker = designgrounded_ros2.vision_marker_node:main",
         ],
     },
 )

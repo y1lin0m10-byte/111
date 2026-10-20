@@ -82,6 +82,13 @@ def generate_launch_description() -> LaunchDescription:
         output="screen",
     )
 
+    markers = Node(
+        package="designgrounded_ros2",
+        executable="vision_marker",
+        parameters=[{"use_sim_time": False}],
+        output="screen",
+    )
+
     return LaunchDescription(
         [
             DeclareLaunchArgument("camera_namespace", default_value="camera"),
@@ -105,6 +112,7 @@ def generate_launch_description() -> LaunchDescription:
             camera,
             capture,
             perception,
+            markers,
         ]
     )
 

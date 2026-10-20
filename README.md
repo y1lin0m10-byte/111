@@ -103,6 +103,24 @@ Additional topics:
 /detected_wood_blocks
 /detected_wood_blocks_info
 /pick_place_progress
+/vision/visual_state
+/vision/uncertainty
+/vision/active_observation
+/vision/instance_masks
+/vision/visualization
+```
+
+The classical RGB-D vision core provides:
+
+```text
+wood instance segmentation
+metric point-cloud recovery
+depth outlier removal
+PCA-oriented bounding box
+6D pose and covariance
+target-slot matching
+uncertainty and active-observation ranking
+RViz marker visualization
 ```
 
 For repeatable perception experiments:

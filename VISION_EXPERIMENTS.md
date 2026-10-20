@@ -78,25 +78,31 @@ ros2 topic echo /gazebo/model_states
 
 ## Current Baseline
 
-The checked-in perception node uses:
+The checked-in perception node now uses:
 
 ```text
-HSV wood-color segmentation
-depth median for each connected component
-camera projection
+HSV wood instance segmentation
+depth projection to a metric point cloud
+depth outlier removal
+PCA-oriented bounding box
+six-dimensional pose and covariance
+confidence and uncertainty estimation
+target-slot matching
+active-observation ranking
 TF2 transform to world
 ```
 
-It is a reproducibility baseline, not the final paper method.
+This is a complete classical RGB-D baseline. Deep instance segmentation and
+learned pose refinement remain the next upgrades.
 
 ## Planned Vision Upgrades
 
 ```text
-1. Replace HSV contours with RGB-D instance segmentation.
-2. Add point-cloud clustering and isolated block recovery.
-3. Estimate oriented 3D boxes and 6D poses.
-4. Calibrate detection confidence and pose covariance.
-5. Add active viewpoint selection.
+1. Replace HSV contours with learned RGB-D instance segmentation.
+2. Add graph-based or watershed splitting for touching blocks.
+3. Add ICP refinement against a prior box template.
+4. Fit temperature and covariance calibration from real data.
+5. Connect active-observation ranking to robot viewpoint execution.
 6. Compare against YOLO-seg, SAM2 and ICP baselines.
 ```
 

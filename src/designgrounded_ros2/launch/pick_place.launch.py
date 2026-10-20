@@ -48,11 +48,18 @@ def generate_launch_description() -> LaunchDescription:
         output="screen",
     )
 
+    markers = Node(
+        package="designgrounded_ros2",
+        executable="vision_marker",
+        parameters=[{"use_sim_time": True}],
+        output="screen",
+    )
+
     return LaunchDescription(
         [
             simulation,
             TimerAction(period=8.0, actions=[perception]),
-            TimerAction(period=10.0, actions=[pick_place]),
+            TimerAction(period=10.0, actions=[pick_place, markers]),
         ]
     )
 

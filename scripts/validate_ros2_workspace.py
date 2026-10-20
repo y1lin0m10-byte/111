@@ -57,6 +57,8 @@ def main() -> int:
         PACKAGE / "designgrounded_ros2" / "scene_manager_node.py",
         PACKAGE / "designgrounded_ros2" / "vision_benchmark_node.py",
         PACKAGE / "designgrounded_ros2" / "dataset_capture_node.py",
+        PACKAGE / "designgrounded_ros2" / "vision_core.py",
+        PACKAGE / "designgrounded_ros2" / "vision_marker_node.py",
     ]
     for path in python_files:
         try:
@@ -134,6 +136,7 @@ def main() -> int:
         "tf2_ros",
         "tf2_geometry_msgs",
         "realsense2_camera",
+        "visualization_msgs",
     ]:
         if dependency not in package_text:
             errors.append(f"package.xml missing dependency: {dependency}")
@@ -152,6 +155,8 @@ def main() -> int:
     print("pick_place_nodes=perception+pick_place")
     print("vision_experiment=scene_manager+perception+benchmark")
     print("real_d405_capture=realsense+capture+perception")
+    print("vision_core=segmentation+obb+pose+covariance+target_matching")
+    print("vision_markers=uncertainty-aware OBB visualization")
     return 0
 
 
